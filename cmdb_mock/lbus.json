@@ -1,0 +1,27 @@
+{
+  "count": 5,
+  "next": null,
+  "previous": null,
+  "results": [
+    {
+      "url": "1",
+      "ad_code": "1abcde"
+    },
+    {
+      "url": "2",
+      "ad_code": "2fghij"
+    },
+    {
+      "url": "3",
+      "ad_code": "3klmno"
+    },
+    {
+      "url": "4",
+      "ad_code": "4pqrst"
+    },
+    {
+      "url": "5",
+      "ad_code": "5uvwxy"
+    }
+  ]
+}
