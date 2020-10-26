@@ -55,7 +55,7 @@ pipeline {
                     } else {
                         String url = 'https://cmdb.pru.intranet.asia/rest/lbus/'
                         while (url != null) {
-                            def response = httpRequest url: url, quiet: true
+                            def response = httpRequest url: url, quiet: true, ignoreSslErrors: true
                             def content = readJSON text: response.content
 
                             lbuResults += content.results
