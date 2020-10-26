@@ -1,4 +1,4 @@
-Boolean mockCmdb = true
+Boolean mockCmdb = false
 List supportGroups = [
     'RT-SRE',
     'RT-IA',
@@ -36,7 +36,9 @@ Map lbuGroups = [
 ]
 
 pipeline {
-    agent any
+    agent {
+        label 'base'
+    }
 
     options {
         skipDefaultCheckout()
@@ -64,7 +66,6 @@ pipeline {
                     }
 
                     lbuResults.each { lbu ->
-                        echo "lbu: ${lbu.ad_code}"
                         lbus.add([
                             name: lbu.ad_code,
                             displayName: lbu.ad_code.toUpperCase(),
@@ -77,6 +78,7 @@ pipeline {
         stage('Seed') {
             steps {
                 checkout scm
+                echo "Seeding: ${lbus}"
                 jobDsl(
                     targets: ['seed.groovy'].join('\n'),
                     failOnMissingPlugin: true,
