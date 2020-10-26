@@ -17,7 +17,7 @@ List lbuPermissions = [
     'hudson.model.Item.Cancel',
 ]
 List lbuResults = []
-List lbuGroups = [
+Map lbuGroups = [
     afprho: ['GAFRHO-JenkinsUsers (43d97a45-b778-4478-877c-699a75618810)'],
     hklife: ['GHKLife-JenkinsUsers (17428b7d-2483-4092-afa6-32e538cdf6a9)'],
     hkprho: ['GHKRHO-JenkinsUsers (8e89731f-0ca5-4968-aa11-e576a7525856)'],
@@ -31,7 +31,7 @@ List lbuGroups = [
     sglife: ['GSGLife-JenkinsUsers (568a0ac7-dd7a-4a75-a87b-7f9b7576eb90)'],
     sgprho: ['GSGRHO-JenkinsUsers (7c38d674-8615-4d62-ae8b-dc507a2df53e)'],
     sgrtss: ['GSGRITS-JenkinsUsers (6b66fb47-ff0b-4434-8cbe-1440f3afaab9)'],
-    tflife: ['GTHLife-JenkinsUsers (6c32432c-6075-482a-8441-026315fb827d)'],
+    thlife: ['GTHLife-JenkinsUsers (6c32432c-6075-482a-8441-026315fb827d)'],
     vnlife: ['GVNLife-JenkinsUsers (1c25a673-ae6e-463d-ba60-8dffef92a8bd)'],
 ]
 
