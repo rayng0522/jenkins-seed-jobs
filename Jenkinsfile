@@ -62,7 +62,7 @@ pipeline {
                         echo lbuResults.toString()
                     } else {
                         String url = 'https://cmdb.pru.intranet.asia/rest/lbus/'
-                        while (url != null) {
+                        while (url != 'null') {
                             echo "Requesting from ${url}"
                             def response = httpRequest url: url, quiet: true, ignoreSslErrors: true
                             def content = readJSON text: response.content
