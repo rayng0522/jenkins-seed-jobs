@@ -43,6 +43,12 @@ pipeline {
         timestamps()
     }
 
+    environment {
+        HTTP_PROXY  = 'http://10.163.39.77:8080'
+        HTTPS_PROXY = 'http://10.163.39.77:8080'
+        NO_PROXY    = 'intranet.asia,pru.intranet.asia'
+    }
+
     stages {
         stage('Setup') {
             steps {
