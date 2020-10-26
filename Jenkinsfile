@@ -36,9 +36,7 @@ Map lbuGroups = [
 ]
 
 pipeline {
-    agent {
-        label 'base'
-    }
+    agent any
 
     options {
         skipDefaultCheckout()
