@@ -104,5 +104,33 @@ pipeline {
                 )
             }
         }
+        stage('Multibranch project') {
+            steps {
+                script {
+                    if (mockCmdb) {
+                      def lbu = readJSON file: 'cmdb_mock/lbu.json'
+                      echo lbu.toString()
+                    }
+                }
+                checkout scm
+                echo "Creating multibranch project: ${lbu.appref}"
+                jobDsl(
+                    targets: ['multibranch.groovy'].join('\n'),
+                    failOnMissingPlugin: true,
+                    failOnSeedCollision: true,
+                    removedConfigFilesAction: 'IGNORE',
+                    removedJobAction: 'IGNORE',
+                    removedViewAction: 'IGNORE',
+                    lookupStrategy: 'JENKINS_ROOT',
+                    sandbox: false,
+                    additionalParameters: [
+                        lbu: lbu.name,
+                        appRef: lbu.appref,
+                        gitRepo: lbu.gitRepo,
+                        repoCredential: lbu.credential
+                    ]
+                )
+            }
+        }
     }
 }
