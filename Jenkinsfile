@@ -1,4 +1,4 @@
-Boolean mockCmdb = false
+Boolean mockCmdb = true
 List supportGroups = [
     'RT-SRE',
     'RT-IA',
@@ -91,7 +91,7 @@ pipeline {
                     failOnMissingPlugin: true,
                     failOnSeedCollision: true,
                     removedConfigFilesAction: 'DELETE',
-                    removedJobAction: 'DELETE',
+                    removedJobAction: 'IGNORE',
                     removedViewAction: 'DELETE',
                     lookupStrategy: 'JENKINS_ROOT',
                     sandbox: false,
@@ -106,30 +106,25 @@ pipeline {
         }
         stage('Multibranch project') {
             steps {
+                checkout scm
                 script {
+                    def lbu = ""
                     if (mockCmdb) {
-                      def lbu = readJSON file: 'cmdb_mock/lbu.json'
+                      lbu = readJSON file: 'cmdb_mock/lbu.json'
                       echo lbu.toString()
                     }
+                    echo "Creating multibranch project: ${lbu.appRef}"
+                    jobDsl(
+                        targets: ['multibranch.groovy'].join('\n'),
+                        additionalParameters: [
+                            lbu: lbu.name,
+                            appRef: lbu.appRef,
+                            gitRepo: lbu.gitRepo,
+                            repoCredential: lbu.credential,
+                            blueprintsFolder: "RT-SRE/blueprints"
+                        ]
+                    )
                 }
-                checkout scm
-                echo "Creating multibranch project: ${lbu.appref}"
-                jobDsl(
-                    targets: ['multibranch.groovy'].join('\n'),
-                    failOnMissingPlugin: true,
-                    failOnSeedCollision: true,
-                    removedConfigFilesAction: 'IGNORE',
-                    removedJobAction: 'IGNORE',
-                    removedViewAction: 'IGNORE',
-                    lookupStrategy: 'JENKINS_ROOT',
-                    sandbox: false,
-                    additionalParameters: [
-                        lbu: lbu.name,
-                        appRef: lbu.appref,
-                        gitRepo: lbu.gitRepo,
-                        repoCredential: lbu.credential
-                    ]
-                )
             }
         }
     }

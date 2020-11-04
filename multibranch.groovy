@@ -1,6 +1,6 @@
-String blueprintsFolder = 'RT-SRE/blueprints'
 UUID uuid = UUID.randomUUID()
 String folderName = [blueprintsFolder, lbu, appRef].join('/')
+
 multibranchPipelineJob("${folderName}") {
     displayName "${appRef}"
     description "{'appref': ${appRef}, 'purpose': 'terraform blueprint deployer', 'lbu': ${lbu}  }"
