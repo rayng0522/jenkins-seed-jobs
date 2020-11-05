@@ -1,4 +1,4 @@
-Boolean mockCmdb = true
+Boolean mockCmdb = false
 List supportGroups = [
     'RT-SRE',
     'RT-IA',
