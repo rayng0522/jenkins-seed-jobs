@@ -36,9 +36,43 @@ Map lbuGroups = [
 ]
 
 pipeline {
-    agent {
-        label 'base'
+  agent {
+    kubernetes {
+        label 'pod'
+        yaml """
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    label: k8-pods
+spec:
+  containers:
+  - name: "git"
+    image: "alpine/git"
+    command:
+    - cat
+    tty: true
+    alwaysPullImage: true
+  - name: "az-cli"
+    image: "microsoft/azure-cli"
+    command:
+    - cat
+    tty: true
+    alwaysPullImage: true
+  - name: "docker-builder"
+    image: "docker:19"
+    tty: true
+    alwaysPullImage: true
+    volumeMounts:
+      - name: "docker-socket"
+        mountPath: "/var/run/docker.sock"
+  volumes:
+    - name: "docker-socket"
+      hostPath:
+        path: "/var/run/docker.sock"
+"""
     }
+  }
 
     // options {
     //     skipDefaultCheckout()
@@ -55,29 +89,31 @@ pipeline {
         stage('Setup') {
             steps {
                 checkout scm
-                script {
-                    if (mockCmdb) {
-                        def cmdbLbusFile = readJSON file: 'cmdb_mock/lbus.json'
-                        lbuResults = cmdbLbusFile.results
-                        echo lbuResults.toString()
-                    } else {
-                        String url = 'https://cmdb.pru.intranet.asia/rest/lbus/'
-                        while (url != 'null') {
-                            echo "Requesting from ${url}"
-                            def response = httpRequest url: url, quiet: true, ignoreSslErrors: true
-                            def content = readJSON text: response.content
+                container('git') {
+                    script {
+                        if (mockCmdb) {
+                            def cmdbLbusFile = readJSON file: 'cmdb_mock/lbus.json'
+                            lbuResults = cmdbLbusFile.results
+                            echo lbuResults.toString()
+                        } else {
+                            String url = 'https://cmdb.pru.intranet.asia/rest/lbus/'
+                            while (url != 'null') {
+                                echo "Requesting from ${url}"
+                                def response = httpRequest url: url, quiet: true, ignoreSslErrors: true
+                                def content = readJSON text: response.content
 
-                            lbuResults += content.results
-                            url = content.next
+                                lbuResults += content.results
+                                url = content.next
+                            }
                         }
-                    }
 
-                    lbuResults.each { lbu ->
-                        lbus.add([
-                            name: lbu.ad_code,
-                            displayName: lbu.ad_code.toUpperCase(),
-                            groups: lbuGroups.get(lbu.ad_code)
-                        ])
+                        lbuResults.each { lbu ->
+                            lbus.add([
+                                name: lbu.ad_code,
+                                displayName: lbu.ad_code.toUpperCase(),
+                                groups: lbuGroups.get(lbu.ad_code)
+                            ])
+                        }
                     }
                 }
             }
@@ -85,43 +121,47 @@ pipeline {
         stage('Seed') {
             steps {
                 checkout scm
-                echo "Seeding: ${lbus}"
-                jobDsl(
-                    targets: ['seed.groovy'].join('\n'),
-                    failOnMissingPlugin: true,
-                    failOnSeedCollision: true,
-                    removedConfigFilesAction: 'DELETE',
-                    removedJobAction: 'DELETE',
-                    removedViewAction: 'DELETE',
-                    lookupStrategy: 'JENKINS_ROOT',
-                    sandbox: false,
-                    additionalParameters: [
-                        lbus: lbus,
-                        lbuPermissions: lbuPermissions,
-                        supportGroups: supportGroups,
-                        supportPermissions: supportPermissions,
-                    ]
-                )
+                container('git') {
+                    echo "Seeding: ${lbus}"
+                    jobDsl(
+                        targets: ['seed.groovy'].join('\n'),
+                        failOnMissingPlugin: true,
+                        failOnSeedCollision: true,
+                        removedConfigFilesAction: 'DELETE',
+                        removedJobAction: 'DELETE',
+                        removedViewAction: 'DELETE',
+                        lookupStrategy: 'JENKINS_ROOT',
+                        sandbox: false,
+                        additionalParameters: [
+                            lbus: lbus,
+                            lbuPermissions: lbuPermissions,
+                            supportGroups: supportGroups,
+                            supportPermissions: supportPermissions,
+                        ]
+                    )
+                }
             }
         }
         stage('Multibranch project') {
             steps {
                 checkout scm
-                script {
-                    def jobs = []
-                    if (mockCmdb) {
-                      jobs = readJSON file: 'cmdb_mock/jobs.json'
-                      echo jobs.toString()
+                container('git') {
+                    script {
+                        def jobs = []
+                        if (mockCmdb) {
+                          jobs = readJSON file: 'cmdb_mock/jobs.json'
+                          echo jobs.toString()
+                        }
+                        echo "Creating multibranch project jobs"
+                        jobDsl(
+                            targets: ['multibranch.groovy'].join('\n'),
+                            additionalParameters: [
+                                jobs: jobs,
+                                repoCredential: "",
+                                blueprintsFolder: "RT-SRE/blueprints"
+                            ]
+                        )
                     }
-                    echo "Creating multibranch project jobs"
-                    jobDsl(
-                        targets: ['multibranch.groovy'].join('\n'),
-                        additionalParameters: [
-                            jobs: jobs,
-                            repoCredential: "",
-                            blueprintsFolder: "RT-SRE/blueprints"
-                        ]
-                    )
                 }
             }
         }
