@@ -1,4 +1,4 @@
-Boolean mockCmdb = false
+Boolean mockCmdb = true
 List supportGroups = [
     'RT-SRE',
     'RT-IA',
@@ -108,12 +108,12 @@ pipeline {
             steps {
                 checkout scm
                 script {
-                    def lbu = ""
+                    def jobs = []
                     if (mockCmdb) {
                       jobs = readJSON file: 'cmdb_mock/jobs.json'
-                      echo lbu.toString()
+                      echo jobs.toString()
                     }
-                    echo "Creating multibranch project: ${lbu.appRef}"
+                    echo "Creating multibranch project jobs"
                     jobDsl(
                         targets: ['multibranch.groovy'].join('\n'),
                         additionalParameters: [
