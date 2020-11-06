@@ -1,9 +1,9 @@
 jobs.each { job ->
     UUID uuid = UUID.randomUUID()
-    String lbu_name   = "hklife"
+    String lbu        = job.ad_code
     String appRef     = job.code
     String gitRepo    = job.repo
-    String folderName = [blueprintsFolder, lbu_name, appRef].join('/')
+    String folderName = [blueprintsFolder, lbu, appRef].join('/')
     multibranchPipelineJob("${folderName}") {
         displayName "${appRef}"
         description "{'appref': ${appRef}, 'purpose': 'terraform blueprint deployer', 'lbu': ${lbu}  }"
