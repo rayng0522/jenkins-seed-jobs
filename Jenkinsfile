@@ -149,13 +149,20 @@ spec:
                     script {
                         List jobs = []
                         if (mockCmdb) {
-                          jobs = readJSON file: 'cmdb_mock/jobs.json'
+                          jobsResults = readJSON file: 'cmdb_mock/jobs.json'
+                        }
+                        jobsResults.each { job ->
+                            jobs.add([
+                                ad_code: lbu.ad_code,
+                                appRef: lbu.ad_code.toUpperCase(),
+                                repo: lbuGroups.get(lbu.ad_code)
+                            ])
                         }
                         echo "Creating multibranch project jobs"
                         jobDsl(
                             targets: ['multibranch.groovy'].join('\n'),
                             additionalParameters: [
-                                jobs: jobs.results,
+                                jobs: jobs,
                                 repoCredential: "",
                                 blueprintsFolder: "RT-SRE/blueprints"
                             ]
