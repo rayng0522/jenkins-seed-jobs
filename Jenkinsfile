@@ -88,8 +88,8 @@ spec:
     stages {
         stage('Setup') {
             steps {
-                checkout scm
                 container('git') {
+                    checkout scm
                     script {
                         if (mockCmdb) {
                             def cmdbLbusFile = readJSON file: 'cmdb_mock/lbus.json'
@@ -118,52 +118,52 @@ spec:
                 }
             }
         }
-        stage('Seed') {
-            steps {
-                checkout scm
-                container('git') {
-                    echo "Seeding: ${lbus}"
-                    jobDsl(
-                        targets: ['seed.groovy'].join('\n'),
-                        failOnMissingPlugin: true,
-                        failOnSeedCollision: true,
-                        removedConfigFilesAction: 'DELETE',
-                        removedJobAction: 'DELETE',
-                        removedViewAction: 'DELETE',
-                        lookupStrategy: 'JENKINS_ROOT',
-                        sandbox: false,
-                        additionalParameters: [
-                            lbus: lbus,
-                            lbuPermissions: lbuPermissions,
-                            supportGroups: supportGroups,
-                            supportPermissions: supportPermissions,
-                        ]
-                    )
-                }
-            }
-        }
-        stage('Multibranch project') {
-            steps {
-                checkout scm
-                container('git') {
-                    script {
-                        def jobs = []
-                        if (mockCmdb) {
-                          jobs = readJSON file: 'cmdb_mock/jobs.json'
-                          echo jobs.toString()
-                        }
-                        echo "Creating multibranch project jobs"
-                        jobDsl(
-                            targets: ['multibranch.groovy'].join('\n'),
-                            additionalParameters: [
-                                jobs: jobs,
-                                repoCredential: "",
-                                blueprintsFolder: "RT-SRE/blueprints"
-                            ]
-                        )
-                    }
-                }
-            }
-        }
+        // stage('Seed') {
+        //     steps {
+        //         container('git') {
+        //             checkout scm
+        //             echo "Seeding: ${lbus}"
+        //             jobDsl(
+        //                 targets: ['seed.groovy'].join('\n'),
+        //                 failOnMissingPlugin: true,
+        //                 failOnSeedCollision: true,
+        //                 removedConfigFilesAction: 'DELETE',
+        //                 removedJobAction: 'DELETE',
+        //                 removedViewAction: 'DELETE',
+        //                 lookupStrategy: 'JENKINS_ROOT',
+        //                 sandbox: false,
+        //                 additionalParameters: [
+        //                     lbus: lbus,
+        //                     lbuPermissions: lbuPermissions,
+        //                     supportGroups: supportGroups,
+        //                     supportPermissions: supportPermissions,
+        //                 ]
+        //             )
+        //         }
+        //     }
+        // }
+        // stage('Multibranch project') {
+        //     steps {
+        //         container('git') {
+        //             checkout scm
+        //             script {
+        //                 def jobs = []
+        //                 if (mockCmdb) {
+        //                   jobs = readJSON file: 'cmdb_mock/jobs.json'
+        //                   echo jobs.toString()
+        //                 }
+        //                 echo "Creating multibranch project jobs"
+        //                 jobDsl(
+        //                     targets: ['multibranch.groovy'].join('\n'),
+        //                     additionalParameters: [
+        //                         jobs: jobs,
+        //                         repoCredential: "",
+        //                         blueprintsFolder: "RT-SRE/blueprints"
+        //                     ]
+        //                 )
+        //             }
+        //         }
+        //     }
+        // }
     }
 }
