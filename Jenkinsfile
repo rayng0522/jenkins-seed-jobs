@@ -151,9 +151,10 @@ spec:
                         if (mockCmdb) {
                           jobsResults = readJSON file: 'cmdb_mock/jobs.json'
                         }
+                        echo jobsResults.toString()
                         jobsResults.each { job ->
                             jobs.add([
-                                ad_code: job.subscription.tenant.lbu.ad_code,
+                                // ad_code: job.subscription.tenant.lbu.ad_code,
                                 appRef: job.code,
                                 repo: job.repo
                             ])
