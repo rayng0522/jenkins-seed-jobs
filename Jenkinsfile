@@ -153,8 +153,8 @@ spec:
                         }
                         jobsResults.each { job ->
                             jobs.add([
-                                ad_code: job.ad_code,
-                                appRef: job.subscription.tenant.lbu.ad_code,
+                                ad_code: job.subscription.tenant.lbu.ad_code,
+                                appRef: job.code,
                                 repo: job.repo
                             ])
                         }
