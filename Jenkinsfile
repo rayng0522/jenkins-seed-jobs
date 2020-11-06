@@ -147,7 +147,7 @@ spec:
                 container('git') {
                     checkout scm
                     script {
-                        def jobs = []
+                        List jobs = []
                         if (mockCmdb) {
                           jobs = readJSON file: 'cmdb_mock/jobs.json'
                           echo jobs.toString()
