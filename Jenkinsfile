@@ -122,25 +122,23 @@ spec:
             steps {
                 container('git') {
                     checkout scm
-                    script {
                     echo "Seeding: ${lbus}"
-                        jobDsl(
-                            targets: ['seed.groovy'].join('\n'),
-                            failOnMissingPlugin: true,
-                            failOnSeedCollision: true,
-                            removedConfigFilesAction: 'DELETE',
-                            removedJobAction: 'DELETE',
-                            removedViewAction: 'DELETE',
-                            lookupStrategy: 'JENKINS_ROOT',
-                            sandbox: false,
-                            additionalParameters: [
-                                lbus: lbus,
-                                lbuPermissions: lbuPermissions,
-                                supportGroups: supportGroups,
-                                supportPermissions: supportPermissions,
-                            ]
-                        )
-                    }
+                    jobDsl(
+                        targets: ['seed.groovy'].join('\n'),
+                        failOnMissingPlugin: true,
+                        failOnSeedCollision: true,
+                        removedConfigFilesAction: 'DELETE',
+                        removedJobAction: 'DELETE',
+                        removedViewAction: 'DELETE',
+                        lookupStrategy: 'JENKINS_ROOT',
+                        sandbox: false,
+                        additionalParameters: [
+                            lbus: lbus,
+                            lbuPermissions: lbuPermissions,
+                            supportGroups: supportGroups,
+                            supportPermissions: supportPermissions,
+                        ]
+                    )
                 }
             }
         }
