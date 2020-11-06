@@ -37,8 +37,8 @@ Map lbuGroups = [
     vnlife: ['GVNLife-JenkinsUsers (1c25a673-ae6e-463d-ba60-8dffef92a8bd)'],
 ]
 
-def fileRequest(file){
-  def file = readJSON file: file
+def fileRequest(filename){
+  def file = readJSON file: filename
   List results = file.results
   return results
 }
