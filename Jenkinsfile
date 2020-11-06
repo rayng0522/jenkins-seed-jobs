@@ -150,7 +150,6 @@ spec:
                         List jobs = []
                         if (mockCmdb) {
                           jobs = readJSON file: 'cmdb_mock/jobs.json'
-                          echo jobs.toString()
                         }
                         echo "Creating multibranch project jobs"
                         jobDsl(
