@@ -156,9 +156,9 @@ spec:
 
                         jobsResults.each { job ->
                             jobs.add([
-                                ad_code: job.subscription.tenant.lbu.ad_code,
+                                adCode: job.subscription.tenant.lbu.ad_code,
                                 appRef: job.code,
-                                repo: job.repo
+                                gitRepo: job.repo
                             ])
                         }
                         echo "Creating multibranch project jobs"

@@ -1,8 +1,8 @@
 jobs.each { job ->
     UUID uuid = UUID.randomUUID()
-    String lbu        = job.ad_code
-    String appRef     = job.code
-    String gitRepo    = job.repo
+    String lbu        = job.adCode
+    String appRef     = job.appRef
+    String gitRepo    = job.gitRepo
     String folderName = [blueprintsFolder, lbu, appRef].join('/')
     multibranchPipelineJob("${folderName}") {
         displayName "${appRef}"
