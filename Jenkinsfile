@@ -156,7 +156,7 @@ spec:
                         jobDsl(
                             targets: ['multibranch.groovy'].join('\n'),
                             additionalParameters: [
-                                jobs: jobs,
+                                jobs: jobs.results,
                                 repoCredential: "",
                                 blueprintsFolder: "RT-SRE/blueprints"
                             ]
