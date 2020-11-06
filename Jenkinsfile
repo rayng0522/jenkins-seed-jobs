@@ -91,7 +91,7 @@ pipeline {
                     failOnMissingPlugin: true,
                     failOnSeedCollision: true,
                     removedConfigFilesAction: 'DELETE',
-                    removedJobAction: 'IGNORE',
+                    removedJobAction: 'DELETE',
                     removedViewAction: 'DELETE',
                     lookupStrategy: 'JENKINS_ROOT',
                     sandbox: false,
@@ -110,7 +110,7 @@ pipeline {
                 script {
                     def lbu = ""
                     if (mockCmdb) {
-                      lbu = readJSON file: 'cmdb_mock/lbu.json'
+                      jobs = readJSON file: 'cmdb_mock/jobs.json'
                       echo lbu.toString()
                     }
                     echo "Creating multibranch project: ${lbu.appRef}"
