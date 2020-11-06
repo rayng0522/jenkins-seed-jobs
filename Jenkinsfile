@@ -40,10 +40,10 @@ pipeline {
         label 'base'
     }
 
-    options {
-        skipDefaultCheckout()
-        timestamps()
-    }
+    // options {
+    //     skipDefaultCheckout()
+    //     timestamps()
+    // }
 
     environment {
         HTTP_PROXY  = 'http://10.163.39.77:8080'
@@ -117,10 +117,8 @@ pipeline {
                     jobDsl(
                         targets: ['multibranch.groovy'].join('\n'),
                         additionalParameters: [
-                            lbu: lbu.name,
-                            appRef: lbu.appRef,
-                            gitRepo: lbu.gitRepo,
-                            repoCredential: lbu.credential,
+                            jobs: jobs,
+                            repoCredential: "",
                             blueprintsFolder: "RT-SRE/blueprints"
                         ]
                     )
