@@ -11,12 +11,14 @@ List supportPermissions = [
     'com.cloudbees.plugins.credentials.CredentialsProvider.Update',
 ]
 List lbus = []
+List jobs = []
 List lbuPermissions = [
     'hudson.model.Item.Read',
     'hudson.model.Item.Build',
     'hudson.model.Item.Cancel',
 ]
 List lbuResults = []
+List jobResults = []
 Map lbuGroups = [
     afprho: ['GAFRHO-JenkinsUsers (43d97a45-b778-4478-877c-699a75618810)'],
     hklife: ['GHKLife-JenkinsUsers (17428b7d-2483-4092-afa6-32e538cdf6a9)'],
@@ -34,6 +36,25 @@ Map lbuGroups = [
     thlife: ['GTHLife-JenkinsUsers (6c32432c-6075-482a-8441-026315fb827d)'],
     vnlife: ['GVNLife-JenkinsUsers (1c25a673-ae6e-463d-ba60-8dffef92a8bd)'],
 ]
+
+def fileRequest(file){
+  def file = readJSON file: file
+  List results = file.results
+  return results
+}
+
+def dataRequest(url){
+    List results
+    while (url != 'null') {
+      echo "Requesting from ${url}"
+      def response = httpRequest url: url, quiet: true, ignoreSslErrors: true
+      def content = readJSON text: response.content
+
+      results += content.results
+      url = content.next
+    }
+    return results
+}
 
 pipeline {
   agent {
@@ -92,19 +113,12 @@ spec:
                     checkout scm
                     script {
                         if (mockCmdb) {
-                            def cmdbLbusFile = readJSON file: 'cmdb_mock/lbus.json'
-                            lbuResults = cmdbLbusFile.results
+                            lbuResults = fileRequest('cmdb_mock/lbus.json')
                             echo lbuResults.toString()
+                            jobResults = fileRequest('cmdb_mock/jobs.json')
+                            echo jobResults.toString()
                         } else {
-                            String url = 'https://cmdb.pru.intranet.asia/rest/lbus/'
-                            while (url != 'null') {
-                                echo "Requesting from ${url}"
-                                def response = httpRequest url: url, quiet: true, ignoreSslErrors: true
-                                def content = readJSON text: response.content
-
-                                lbuResults += content.results
-                                url = content.next
-                            }
+                            lbuResults = dataRequsest('1',results)
                         }
 
                         lbuResults.each { lbu ->
@@ -147,14 +161,7 @@ spec:
                 container('git') {
                     checkout scm
                     script {
-                        List jobs = []
-                        if (mockCmdb) {
-                          def jobFile = readJSON file: 'cmdb_mock/jobs.json'
-                          jobsResults = jobFile.results
-                        }
-                        echo jobsResults.toString()
-
-                        jobsResults.each { job ->
+                        jobResults.each { job ->
                             jobs.add([
                                 adCode: job.subscription.tenant.lbu.ad_code,
                                 appRef: job.code,
