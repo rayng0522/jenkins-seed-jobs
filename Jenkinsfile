@@ -153,9 +153,9 @@ spec:
                         }
                         jobsResults.each { job ->
                             jobs.add([
-                                ad_code: lbu.ad_code,
-                                appRef: lbu.ad_code.toUpperCase(),
-                                repo: lbuGroups.get(lbu.ad_code)
+                                ad_code: job.ad_code,
+                                appRef: job.subscription.tenant.lbu.ad_code,
+                                repo: job.repo
                             ])
                         }
                         echo "Creating multibranch project jobs"
