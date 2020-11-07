@@ -32,8 +32,8 @@ jobs.each { job ->
                 remoteJenkinsFileSCM(class: 'jenkins.plugins.git.GitSCMSource') {
                     // it / sources / 'userRemoteConfigs' / 'hudson.plugins.git.UserRemoteConfig' << {
                         url(gitRepo)
-                    //    credentialsId(repoCredential)
-                    }
+                        credentialsId(repoCredential)
+                    //}
                 }
             }
         }
