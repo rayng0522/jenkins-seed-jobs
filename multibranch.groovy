@@ -21,9 +21,13 @@ jobs.each { job ->
                     }
                 }
             }
-            // customise the branch project factory
-            it / factory(class: "org.jenkinsci.plugins.workflow.multibranch.WorkflowBranchProjectFactory") << {
-                // pipeline jobs will have their script path set to `pipelines/customPipeline.groovy`
+            // // customise the branch project factory
+            // it / factory(class: "org.jenkinsci.plugins.workflow.multibranch.WorkflowBranchProjectFactory") << {
+            //     // pipeline jobs will have their script path set to `pipelines/customPipeline.groovy`
+            //     scriptPath("Jenkinsfile")
+            // }
+
+            it / factory(class: "org.jenkinsci.plugins.workflow.multibranch.extended.RemoteJenkinsFileWorkflowBranchProjectFactory") << {
                 scriptPath("Jenkinsfile")
             }
         }
