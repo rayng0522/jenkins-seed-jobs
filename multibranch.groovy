@@ -31,15 +31,8 @@ jobs.each { job ->
                 scriptPath("Jenkinsfile")
                 it / sources / 'data' / 'jenkins.branch.BranchSource' << {
                     source(class: 'jenkins.plugins.git.GitSCMSource') {
-                        id(uuid)
                         remote(gitRepo)
                         credentialsId(repoCredential)
-                        includes('*')
-                        excludes('')
-                        ignoreOnPushNotifications('false')
-                        traits {
-                            'jenkins.plugins.git.traits.BranchDiscoveryTrait'()
-                        }
                     }
                 }
             }
