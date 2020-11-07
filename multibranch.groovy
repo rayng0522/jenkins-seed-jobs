@@ -29,6 +29,8 @@ jobs.each { job ->
 
             it / factory(class: "org.jenkinsci.plugins.workflow.multibranch.extended.RemoteJenkinsFileWorkflowBranchProjectFactory") << {
                 scriptPath("Jenkinsfile")
+                remote(gitRepo)
+                credentialsId(repoCredential)
             }
         }
     }
