@@ -29,7 +29,9 @@ jobs.each { job ->
 
             it / factory(class: "org.jenkinsci.plugins.workflow.multibranch.extended.RemoteJenkinsFileWorkflowBranchProjectFactory") << {
                 setRemoteJenkinsFile("Jenkinsfile")
-                remoteJenkinsFileSCM(gitRepo)
+                source(class: 'RemoteJenkinsFileWorkflowBranchProjectFactory') {
+                    setRemoteJenkinsFileSCM(gitRepo)
+                }
             }
         }
     }
