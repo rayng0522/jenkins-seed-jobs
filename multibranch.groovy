@@ -34,10 +34,8 @@ jobs.each { job ->
                     // it / sources / 'userRemoteConfigs' / 'hudson.plugins.git.UserRemoteConfig' << {
                    userRemoteConfigs { // This is the tag of type CONFIGURE
                        'hudson.plugins.git.UserRemoteConfig' (
-                              url(gitRepo)
-                              credentialsId(repoCredential)
+                            url(gitRepo)
                        )
-
                    }
                 }
             }
