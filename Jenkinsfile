@@ -133,7 +133,8 @@ spec:
                             jobs.add([
                                 adCode: job.subscription.tenant.lbu.ad_code,
                                 appRef: job.code,
-                                gitRepo: job.repo
+                                gitRepo: job.repo,
+                                repoCredential: 'git_2'
                             ])
                         }
                     }
