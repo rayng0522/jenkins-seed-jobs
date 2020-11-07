@@ -32,9 +32,10 @@ jobs.each { job ->
                 remoteJenkinsFileSCM(class: 'jenkins.plugins.git.GitSCMSource') {
                    configVersion(2)
                     // it / sources / 'userRemoteConfigs' / 'hudson.plugins.git.UserRemoteConfig' << {
-                   url(gitRepo)
-                   remote(gitRepo)
-                   credentialsId(repoCredential)
+                   it / 'userRemoteConfigs' / 'hudson.plugins.git.UserRemoteConfig' { // This is the tag of type CONFIGURE
+                      url(gitRepo)
+                      credentialsId(repoCredential)
+                   }
                 }
             }
         }
