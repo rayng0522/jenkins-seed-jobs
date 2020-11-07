@@ -29,8 +29,19 @@ jobs.each { job ->
 
             it / factory(class: "org.jenkinsci.plugins.workflow.multibranch.extended.RemoteJenkinsFileWorkflowBranchProjectFactory") << {
                 scriptPath("Jenkinsfile")
-                remote(gitRepo)
-                credentialsId(repoCredential)
+                it / sources / 'data' / 'jenkins.branch.BranchSource' << {
+                    source(class: 'jenkins.plugins.git.GitSCMSource') {
+                        id(uuid)
+                        remote(gitRepo)
+                        credentialsId(repoCredential)
+                        includes('*')
+                        excludes('')
+                        ignoreOnPushNotifications('false')
+                        traits {
+                            'jenkins.plugins.git.traits.BranchDiscoveryTrait'()
+                        }
+                    }
+                }
             }
         }
     }
