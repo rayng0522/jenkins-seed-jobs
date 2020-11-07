@@ -28,16 +28,19 @@ jobs.each { job ->
             // }
 
             it / factory(class: "org.jenkinsci.plugins.workflow.multibranch.extended.RemoteJenkinsFileWorkflowBranchProjectFactory") << {
-                remoteJenkinsFile("Jenkinsfile2")
-                remoteJenkinsFileSCM(class: 'jenkins.plugins.git.GitSCMSource') {
-                   configVersion(2)
-                    // it / sources / 'userRemoteConfigs' / 'hudson.plugins.git.UserRemoteConfig' << {
-                   userRemoteConfigs { // This is the tag of type CONFIGURE
-                       'hudson.plugins.git.UserRemoteConfig' {
-                            url(gitRepo)
-                            credentialsId(repoCredential)
-                       }
-                   }
+               it / owner(class: "org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject") {}
+                  scriptPath("Jenkinsfile")
+                  localMarker()
+                  remoteJenkinsFile("Jenkinsfile2")
+                  remoteJenkinsFileSCM(class: 'jenkins.plugins.git.GitSCMSource') {
+                     configVersion(2)
+                      // it / sources / 'userRemoteConfigs' / 'hudson.plugins.git.UserRemoteConfig' << {
+                     userRemoteConfigs { // This is the tag of type CONFIGURE
+                         'hudson.plugins.git.UserRemoteConfig' {
+                              url(gitRepo)
+                              credentialsId(repoCredential)
+                         }
+                     }
                 }
             }
         }
