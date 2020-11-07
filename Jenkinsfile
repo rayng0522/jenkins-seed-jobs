@@ -128,6 +128,14 @@ spec:
                                 groups: lbuGroups.get(lbu.ad_code)
                             ])
                         }
+
+                        jobResults.each { job ->
+                            jobs.add([
+                                adCode: job.subscription.tenant.lbu.ad_code,
+                                appRef: job.code,
+                                gitRepo: job.repo
+                            ])
+                        }
                     }
                 }
             }
@@ -161,13 +169,6 @@ spec:
                 container('git') {
                     checkout scm
                     script {
-                        jobResults.each { job ->
-                            jobs.add([
-                                adCode: job.subscription.tenant.lbu.ad_code,
-                                appRef: job.code,
-                                gitRepo: job.repo
-                            ])
-                        }
                         echo "Creating multibranch project jobs"
                         jobDsl(
                             targets: ['multibranch.groovy'].join('\n'),
