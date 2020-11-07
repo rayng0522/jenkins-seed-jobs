@@ -30,11 +30,11 @@ jobs.each { job ->
             it / factory(class: "org.jenkinsci.plugins.workflow.multibranch.extended.RemoteJenkinsFileWorkflowBranchProjectFactory") << {
                 setRemoteJenkinsFile("Jenkinsfile")
                 remoteJenkinsFileSCM(class: 'jenkins.plugins.git.GitSCMSource') {
-                    it / sources / 'userRemoteConfigs' / 'hudson.plugins.git.UserRemoteConfig' << {
+                    // it / sources / 'userRemoteConfigs' / 'hudson.plugins.git.UserRemoteConfig' << {
                         url(gitRepo)
-                        credentialsId(repoCredential)
+                    //    credentialsId(repoCredential)
                     }
-                }            
+                }
             }
         }
     }
