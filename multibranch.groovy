@@ -33,6 +33,7 @@ jobs.each { job ->
                    configVersion(2)
                     // it / sources / 'userRemoteConfigs' / 'hudson.plugins.git.UserRemoteConfig' << {
                    url(gitRepo)
+                   remote(gitRepo)
                    credentialsId(repoCredential)
                 }
             }
