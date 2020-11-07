@@ -28,7 +28,7 @@ jobs.each { job ->
             // }
 
             it / factory(class: "org.jenkinsci.plugins.workflow.multibranch.extended.RemoteJenkinsFileWorkflowBranchProjectFactory") << {
-                  owner(class: 'jenkins.plugins.git.GitSCMSource') << {
+                  owner(class: 'org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject') << {
                   setRemoteJenkinsFile("Jenkinsfile")
                         remoteJenkinsFileSCM(class: 'jenkins.plugins.git.GitSCMSource') {
                              it / sources / 'userRemoteConfigs' / 'hudson.plugins.git.UserRemoteConfig' << {
