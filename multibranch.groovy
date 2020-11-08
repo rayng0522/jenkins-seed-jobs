@@ -2,8 +2,9 @@ jobs.each { job ->
     UUID uuid = UUID.randomUUID()
     String lbu        = job.adCode
     String appRef     = job.appRef
-    String gitRepo    = job.gitRepo
     String folderName = [blueprintsFolder, lbu, appRef].join('/')
+    String blueprintGitRepoUrl = job.blueprintGitRepoUrl
+    
     multibranchPipelineJob("${folderName}") {
         displayName "${appRef}"
         description "{'appref': ${appRef}, 'purpose': 'terraform blueprint deployer', 'lbu': ${lbu}  }"
@@ -11,8 +12,8 @@ jobs.each { job ->
             it / sources / 'data' / 'jenkins.branch.BranchSource' << {
                 source(class: 'jenkins.plugins.git.GitSCMSource') {
                     id(uuid)
-                    remote(gitRepo)
-                    credentialsId(repoCredential)
+                    remote(blueprintGitRepoUrl)
+                    credentialsId(gitCredential)
                     includes('*')
                     excludes('')
                     ignoreOnPushNotifications('false')
@@ -21,22 +22,16 @@ jobs.each { job ->
                     }
                 }
             }
-            // // customise the branch project factory
-            // it / factory(class: "org.jenkinsci.plugins.workflow.multibranch.WorkflowBranchProjectFactory") << {
-            //     // pipeline jobs will have their script path set to `pipelines/customPipeline.groovy`
-            //     scriptPath("Jenkinsfile")
-            // }
 
             it / factory(class: "org.jenkinsci.plugins.workflow.multibranch.extended.RemoteJenkinsFileWorkflowBranchProjectFactory") << {                    remoteJenkinsFile("Jenkinsfile")
-                  remoteJenkinsFileSCM(class: 'hudson.plugins.git.GitSCM') {
-                     configVersion(2)
+                remoteJenkinsFileSCM(class: 'hudson.plugins.git.GitSCM') {
                      userRemoteConfigs {
                          'hudson.plugins.git.UserRemoteConfig' {
-                              url(gitRepo)
-                              credentialsId(repoCredential)
+                              url(remoteJenkinsfileGitRepoUrl)
+                              credentialsId(gitCredential)
                          }
                      }
-                }
+                 }
             }
         }
     }

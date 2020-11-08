@@ -133,8 +133,7 @@ spec:
                             jobs.add([
                                 adCode: job.subscription.tenant.lbu.ad_code,
                                 appRef: job.code,
-                                gitRepo: job.repo,
-                                repoCredential: 'rayng_login'
+                                blueprintGitRepoUrl: job.repo
                             ])
                         }
                     }
@@ -176,7 +175,8 @@ spec:
                             additionalParameters: [
                                 jobs: jobs,
                                 blueprintsFolder: "RT-SRE/blueprints",
-                                repoCredential: 'rayng_login'
+                                remoteJenkinsfileGitRepoUrl: "https://github.com/rayng0522/jenkins-seed-jobs.git"
+                                gitCredential: 'rayng_login'
                             ]
                         )
                     }
