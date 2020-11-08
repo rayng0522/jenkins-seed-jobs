@@ -30,7 +30,7 @@ jobs.each { job ->
             it / factory(class: "org.jenkinsci.plugins.workflow.multibranch.extended.RemoteJenkinsFileWorkflowBranchProjectFactory") << {                  scriptPath("Jenkinsfile")
                   localMarker()
                   remoteJenkinsFile("Jenkinsfile2")
-                  remoteJenkinsFileSCM(class: 'jenkins.plugins.git.GitSCMSource') {
+                  remoteJenkinsFileSCM(class: 'hudson.plugins.git.GitSCM') {
                      configVersion(2)
                       // it / sources / 'userRemoteConfigs' / 'hudson.plugins.git.UserRemoteConfig' << {
                      userRemoteConfigs { // This is the tag of type CONFIGURE
