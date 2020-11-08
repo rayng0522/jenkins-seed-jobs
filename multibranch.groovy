@@ -27,9 +27,7 @@ jobs.each { job ->
             //     scriptPath("Jenkinsfile")
             // }
 
-            it / factory(class: "org.jenkinsci.plugins.workflow.multibranch.extended.RemoteJenkinsFileWorkflowBranchProjectFactory") << {
-               it / owner(class: "org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject") {}
-                  scriptPath("Jenkinsfile")
+            it / factory(class: "org.jenkinsci.plugins.workflow.multibranch.extended.RemoteJenkinsFileWorkflowBranchProjectFactory") << {                  scriptPath("Jenkinsfile")
                   localMarker()
                   remoteJenkinsFile("Jenkinsfile2")
                   remoteJenkinsFileSCM(class: 'jenkins.plugins.git.GitSCMSource') {
