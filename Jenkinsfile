@@ -134,7 +134,7 @@ spec:
                                 adCode: job.subscription.tenant.lbu.ad_code,
                                 appRef: job.code,
                                 gitRepo: job.repo,
-                                repoCredential: 'git'
+                                repoCredential: 'rayng_login'
                             ])
                         }
                     }
