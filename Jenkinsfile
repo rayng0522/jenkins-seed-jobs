@@ -175,8 +175,8 @@ spec:
                             targets: ['multibranch.groovy'].join('\n'),
                             additionalParameters: [
                                 jobs: jobs,
-                                repoCredential: "",
-                                blueprintsFolder: "RT-SRE/blueprints"
+                                blueprintsFolder: "RT-SRE/blueprints",
+                                repoCredential: 'rayng_login'
                             ]
                         )
                     }
