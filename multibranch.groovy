@@ -18,10 +18,13 @@ jobs.each { job ->
                     repository("test")
                     traits {
                         'com.cloudbees.jenkins.plugins.bitbucket.BranchDiscoveryTrait'{
-                            strategyId(3)
+                            strategyId(1)
                         }
                         'com.cloudbees.jenkins.plugins.bitbucket.ForkPullRequestDiscoveryTrait'{
-                            strategyId(3)
+                            strategyId(1)
+                        }
+                        'com.cloudbees.jenkins.plugins.bitbucket.OriginPullRequestDiscoveryTrait'{
+                            strategyId(1)
                         }
                     }
                 }
