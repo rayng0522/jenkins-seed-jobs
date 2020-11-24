@@ -17,9 +17,13 @@ jobs.each { job ->
                     repoOwner("TinWai")
                     repository("test")
                     traits {
-                        'com.cloudbees.jenkins.plugins.bitbucket.BranchDiscoveryTrait'()
-                        'com.cloudbees.jenkins.plugins.bitbucket.OriginPullRequestDiscoveryTrait'()
-                        'com.cloudbees.jenkins.plugins.bitbucket.ForkPullRequestDiscoveryTrait$TrustTeamForks'()
+                        'com.cloudbees.jenkins.plugins.bitbucket.BranchDiscoveryTrait'{
+                            strategyId(3)
+                        }
+                        'com.cloudbees.jenkins.plugins.bitbucket.ForkPullRequestDiscoveryTrait'{
+                            strategyId(3)
+                        }
+)
                     }
                 }
             }
