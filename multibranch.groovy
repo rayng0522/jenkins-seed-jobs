@@ -17,7 +17,9 @@ jobs.each { job ->
                     repoOwner("TinWai")
                     repository("test")
                     traits {
-                        'com.cloudbees.jenkins.plugins.bitbucket.BranchDiscoveryTrait'()
+                        'com.cloudbees.jenkins.plugins.bitbucket.BranchDiscoveryTrait'(
+                            strategyId(1)
+                        )
                     }
                 }
             }
