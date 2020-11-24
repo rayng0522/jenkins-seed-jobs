@@ -23,7 +23,6 @@ jobs.each { job ->
                         'com.cloudbees.jenkins.plugins.bitbucket.ForkPullRequestDiscoveryTrait'{
                             strategyId(3)
                         }
-)
                     }
                 }
             }
