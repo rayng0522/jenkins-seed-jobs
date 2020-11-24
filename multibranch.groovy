@@ -18,8 +18,7 @@ jobs.each { job ->
                     excludes('')
                     ignoreOnPushNotifications('false')
                     traits {
-                       'com.cloudbees.jenkins.plugins.bitbucket.BranchDiscoveryTrait'
-                       strategyId(3)
+                       'com.cloudbees.jenkins.plugins.bitbucket.BranchDiscoveryTrait'()
                    }
                 }
             }
