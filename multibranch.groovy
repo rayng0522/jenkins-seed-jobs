@@ -12,7 +12,7 @@ jobs.each { job ->
             it / sources / 'data' / 'jenkins.branch.BranchSource' << {
                 source(class: 'com.cloudbees.jenkins.plugins.bitbucket.BitbucketSCMSource') {
                     id(uuid)
-                    serverUrl("https://code.pruconnect.net")
+                    serverUrl("ssh://git@code.pruconnect.net:7999")
                     credentialsId("ntwairay")
                     repoOwner("rtappbp")
                     repository("sgrtss-nprd-dev-qvmiwy")
