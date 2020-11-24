@@ -17,7 +17,7 @@ jobs.each { job ->
                     repoOwner("rtappbp")
                     repository("sgrtss-nprd-dev-qvmiwy")
                     traits {
-                        'com.cloudbees.jenkins.plugins.bitbucket.BranchDiscoveryTrait'(),
+                        'com.cloudbees.jenkins.plugins.bitbucket.BranchDiscoveryTrait'()
                         strategyId(3)
                     }
                 }
