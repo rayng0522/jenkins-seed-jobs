@@ -18,7 +18,7 @@ jobs.each { job ->
                     repository("sgrtss-nprd-dev-qvmiwy")
                     traits {
                         'com.cloudbees.jenkins.plugins.bitbucket.BranchDiscoveryTrait'(
-                            strategyId(1)
+                            strategyId(3)
                         )
                     }
                 }
