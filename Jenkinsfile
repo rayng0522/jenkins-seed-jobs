@@ -133,7 +133,7 @@ pipeline {
                             jobs: jobs,
                             blueprintsFolder: 'RT-SRE/blueprints',
                             remoteJenkinsfileGitRepoUrl: "https://github.com/rayng0522/jenkins-seed-jobs.git",
-                            gitCredential: 'rayng_login'
+                            gitCredential: 'ntwairay'
                         ]
                     )
                 }

@@ -37,7 +37,7 @@
               "sync_request": "https://cmdb.test.com/rest/subscription_sync_requests/2/"
           },
           "code": "qwikuy",
-          "repo": "https://github.com/rayng0522/jenkins-agent-image-factory-demo.git"
+          "repo": "ssh://git@code.pruconnect.net:7999/rtappbp/sgrtss-nprd-dev-qvmiwy.git"
       },
       {
          "url": "https://cmdb.test.com/rest/applications/271/",
@@ -55,7 +55,7 @@
              "sync_request": "https://cmdb.test.com/rest/subscription_sync_requests/2/"
          },
          "code": "tinwaing",
-         "repo": "https://github.com/rayng0522/jenkins-agent-image-factory-demo.git"
+         "repo": "ssh://git@code.pruconnect.net:7999/rtappbp/sgrtss-nprd-dev-qvmiwy.git"
      }
   ]
 }
