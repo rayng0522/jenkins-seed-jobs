@@ -4,7 +4,7 @@ jobs.each { job ->
     String appRef     = job.appRef
     String folderName = [blueprintsFolder, lbu, appRef].join('/')
     String blueprintGitRepoUrl = job.blueprintGitRepoUrl
-    
+
     multibranchPipelineJob("${folderName}") {
         displayName "${appRef}"
         description "{'appref': ${appRef}, 'purpose': 'terraform blueprint deployer', 'lbu': ${lbu}  }"
@@ -18,7 +18,7 @@ jobs.each { job ->
                     excludes('')
                     ignoreOnPushNotifications('false')
                     traits {
-                        'jenkins.plugins.git.traits.BranchDiscoveryTrait'()
+                        'com.cloudbees.jenkins.plugins.bitbucket.BranchDiscoveryTrait'()
                     }
                 }
             }
