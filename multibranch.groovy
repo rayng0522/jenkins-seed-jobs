@@ -12,10 +12,10 @@ jobs.each { job ->
             it / sources / 'data' / 'jenkins.branch.BranchSource' << {
                 source(class: 'com.cloudbees.jenkins.plugins.bitbucket.BitbucketSCMSource') {
                     id(uuid)
-                    serverUrl("https://bitbucket.org/")
+                    serverUrl("https://bitbucket.org")
                     credentialsId("gmail")
-                    repoOwner("realbase")
-                    repository("kubernetes-cluster-foundation")
+                    repoOwner("TinWai")
+                    repository("test")
                     traits {
                         'com.cloudbees.jenkins.plugins.bitbucket.BranchDiscoveryTrait'()
                     }
