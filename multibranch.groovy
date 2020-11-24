@@ -10,7 +10,7 @@ jobs.each { job ->
         description "{'appref': ${appRef}, 'purpose': 'terraform blueprint deployer', 'lbu': ${lbu}  }"
         configure {
             it / sources / 'data' / 'jenkins.branch.BranchSource' << {
-                source(class: 'jenkins.plugins.git.GitSCMSource') {
+                source(class: 'com.cloudbees.jenkins.plugins.bitbucket.BitbucketSCMSource') {
                     id(uuid)
                     remote(blueprintGitRepoUrl)
                     credentialsId(gitCredential)
@@ -18,8 +18,9 @@ jobs.each { job ->
                     excludes('')
                     ignoreOnPushNotifications('false')
                     traits {
-                        'com.cloudbees.jenkins.plugins.bitbucket.BranchDiscoveryTrait'()
-                    }
+                       'com.cloudbees.jenkins.plugins.bitbucket.BranchDiscoveryTrait'
+                       strategyId(3)
+                   }
                 }
             }
 
