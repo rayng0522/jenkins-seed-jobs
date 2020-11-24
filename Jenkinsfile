@@ -57,44 +57,6 @@ def dataRequest(url){
 }
 
 pipeline {
-  agent {
-    kubernetes {
-        label 'pod'
-        yaml """
-apiVersion: v1
-kind: Pod
-metadata:
-  labels:
-    label: k8-pods
-spec:
-  containers:
-  - name: "git"
-    image: "alpine/git"
-    command:
-    - cat
-    tty: true
-    alwaysPullImage: true
-  - name: "az-cli"
-    image: "microsoft/azure-cli"
-    command:
-    - cat
-    tty: true
-    alwaysPullImage: true
-  - name: "docker-builder"
-    image: "docker:19"
-    tty: true
-    alwaysPullImage: true
-    volumeMounts:
-      - name: "docker-socket"
-        mountPath: "/var/run/docker.sock"
-  volumes:
-    - name: "docker-socket"
-      hostPath:
-        path: "/var/run/docker.sock"
-"""
-    }
-  }
-
     // options {
     //     skipDefaultCheckout()
     //     timestamps()
@@ -109,77 +71,71 @@ spec:
     stages {
         stage('Setup') {
             steps {
-                container('git') {
-                    checkout scm
-                    script {
-                        if (mockCmdb) {
-                            lbuResults = fileRequest('cmdb_mock/lbus.json')
-                            echo lbuResults.toString()
-                            jobResults = fileRequest('cmdb_mock/jobs.json')
-                            echo jobResults.toString()
-                        } else {
-                            lbuResults = dataRequsest('1',results)
-                        }
+                checkout scm
+                script {
+                    if (mockCmdb) {
+                        lbuResults = fileRequest('cmdb_mock/lbus.json')
+                        echo lbuResults.toString()
+                        jobResults = fileRequest('cmdb_mock/jobs.json')
+                        echo jobResults.toString()
+                    } else {
+                        lbuResults = dataRequsest('1',results)
+                    }
 
-                        lbuResults.each { lbu ->
-                            lbus.add([
-                                name: lbu.ad_code,
-                                displayName: lbu.ad_code.toUpperCase(),
-                                groups: lbuGroups.get(lbu.ad_code)
-                            ])
-                        }
+                    lbuResults.each { lbu ->
+                        lbus.add([
+                            name: lbu.ad_code,
+                            displayName: lbu.ad_code.toUpperCase(),
+                            groups: lbuGroups.get(lbu.ad_code)
+                        ])
+                    }
 
-                        jobResults.each { job ->
-                            jobs.add([
-                                adCode: job.subscription.tenant.lbu.ad_code,
-                                appRef: job.code,
-                                blueprintGitRepoUrl: job.repo
-                            ])
-                        }
+                    jobResults.each { job ->
+                        jobs.add([
+                            adCode: job.subscription.tenant.lbu.ad_code,
+                            appRef: job.code,
+                            blueprintGitRepoUrl: job.repo
+                        ])
                     }
                 }
             }
         }
         stage('Seed') {
             steps {
-                container('git') {
-                    checkout scm
-                    echo "Seeding: ${lbus}"
-                    jobDsl(
-                        targets: ['seed.groovy'].join('\n'),
-                        failOnMissingPlugin: true,
-                        failOnSeedCollision: true,
-                        removedConfigFilesAction: 'DELETE',
-                        removedJobAction: 'DELETE',
-                        removedViewAction: 'DELETE',
-                        lookupStrategy: 'JENKINS_ROOT',
-                        sandbox: false,
-                        additionalParameters: [
-                            lbus: lbus,
-                            lbuPermissions: lbuPermissions,
-                            supportGroups: supportGroups,
-                            supportPermissions: supportPermissions,
-                        ]
-                    )
-                }
+                checkout scm
+                echo "Seeding: ${lbus}"
+                jobDsl(
+                    targets: ['seed.groovy'].join('\n'),
+                    failOnMissingPlugin: true,
+                    failOnSeedCollision: true,
+                    removedConfigFilesAction: 'DELETE',
+                    removedJobAction: 'DELETE',
+                    removedViewAction: 'DELETE',
+                    lookupStrategy: 'JENKINS_ROOT',
+                    sandbox: false,
+                    additionalParameters: [
+                        lbus: lbus,
+                        lbuPermissions: lbuPermissions,
+                        supportGroups: supportGroups,
+                        supportPermissions: supportPermissions,
+                    ]
+                )
             }
         }
         stage('Multibranch project') {
             steps {
-                container('git') {
-                    checkout scm
-                    script {
-                        echo "Creating multibranch project jobs"
-                        jobDsl(
-                            targets: ['multibranch.groovy'].join('\n'),
-                            additionalParameters: [
-                                jobs: jobs,
-                                blueprintsFolder: 'RT-SRE/blueprints',
-                                remoteJenkinsfileGitRepoUrl: "https://github.com/rayng0522/jenkins-seed-jobs.git",
-                                gitCredential: 'rayng_login'
-                            ]
-                        )
-                    }
+                checkout scm
+                script {
+                    echo "Creating multibranch project jobs"
+                    jobDsl(
+                        targets: ['multibranch.groovy'].join('\n'),
+                        additionalParameters: [
+                            jobs: jobs,
+                            blueprintsFolder: 'RT-SRE/blueprints',
+                            remoteJenkinsfileGitRepoUrl: "https://github.com/rayng0522/jenkins-seed-jobs.git",
+                            gitCredential: 'rayng_login'
+                        ]
+                    )
                 }
             }
         }

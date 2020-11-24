@@ -12,4 +12,10 @@ Each folder is assigned permissions, with each the AD Groups being referenced by
 
 ## Jobs
 
-TBD
+The seed job creates multibranch project for each appRef under the LBU folder of the appRef inside the blueprints folder (`/RT-SRE/blueprints`).
+
+Each multibranch project will have the remote Jenkinsfile plugin enable by default
+
+Each mulitbranch project inherits the permission from the parent folder
+
+The basic details of the appRef saves in the field display name and description
