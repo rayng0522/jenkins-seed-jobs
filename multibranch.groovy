@@ -12,8 +12,9 @@ jobs.each { job ->
             it / sources / 'data' / 'jenkins.branch.BranchSource' << {
                 source(class: 'com.cloudbees.jenkins.plugins.bitbucket.BitbucketSCMSource') {
                     id(uuid)
-                    getRepository(blueprintGitRepoUrl)
-                    getCredentialsId(gitCredential)
+                    serverUrl("ssh://git@code.pruconnect.net:7999")
+                    repoOwner("rtappbp")
+                    repository("sgrtss-nprd-dev-qvmiwy.git")
                     traits {
                        'com.cloudbees.jenkins.plugins.bitbucket.BranchDiscoveryTrait'()
                    }
