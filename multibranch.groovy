@@ -41,9 +41,9 @@ jobs.each { job ->
                      }
                  }
             }
-        }
-        publisher {
-          extendedEmail('ntwairay@gmail.com', 'Oops', 'Something broken')
+            publisher {
+              extendedEmail('ntwairay@gmail.com', 'Oops', 'Something broken')
+            }
         }
     }
 }
