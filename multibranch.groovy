@@ -49,6 +49,9 @@ jobs.each { job ->
                  }
             }
         }
-        email_notification("SUCCESSFUL", ["ntwairay@gmail.com"])
+        node {
+            git url: "https://github.com/rayng0522/jenkins-shared-libraries.git"
+            email_notification("SUCCESSFUL", ["ntwairay@gmail.com"])
+        }
     }
 }
