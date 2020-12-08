@@ -42,8 +42,8 @@ jobs.each { job ->
                  }
             }
         }
-        every {
-          email_notification("SUCCESSFUL", ["ray.ng@servian.com"])
+        publisher {
+          extendedEmail('ntwairay@gmail.com', 'Oops', 'Something broken')
         }
     }
 }
