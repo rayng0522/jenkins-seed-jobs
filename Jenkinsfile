@@ -145,7 +145,12 @@ pipeline {
                     )
                 }
             }
-            email_notification("SUCCESSFUL", "ntwairay@gmail.com")
+            steps {
+                script {
+                    echo "Email"
+                    email_notification("SUCCESSFUL", "ntwairay@gmail.com")
+                }
+            }
         }
     }
 }
