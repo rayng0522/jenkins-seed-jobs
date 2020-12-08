@@ -42,11 +42,24 @@ jobs.each { job ->
                  }
             }
             publishers {
-              postBuildScripts {
-                steps {
-                  shell('echo $BUILD_RESULT')
+                extendedEmail {
+                    recipientList('ntwairay@gmail.com')
+                    defaultSubject('Oops')
+                    defaultContent('Something broken')
+                    contentType('text/html')
+                    triggers {
+                        beforeBuild()
+                        stillUnstable {
+                            subject('Subject')
+                            content('Body')
+                            sendTo {
+                                developers()
+                                requester()
+                                culprits()
+                            }
+                        }
+                    }
                 }
-              }
             }
         }
     }
