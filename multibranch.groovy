@@ -12,10 +12,10 @@ jobs.each { job ->
             it / sources / 'data' / 'jenkins.branch.BranchSource' << {
                 source(class: 'com.cloudbees.jenkins.plugins.bitbucket.BitbucketSCMSource') {
                     id(uuid)
-                    serverUrl("https://bitbucket.org")
-                    credentialsId("gmail")
-                    repoOwner("TinWai")
-                    repository("test")
+                    serverUrl(bitbucketServerUrl)
+                    credentialsId(bitbucketGitCredential)
+                    repoOwner(bitbucketRepoOwner)
+                    repository(blueprintRepoName)
                     traits {
                         'com.cloudbees.jenkins.plugins.bitbucket.BranchDiscoveryTrait'{
                             strategyId(1)
@@ -30,7 +30,8 @@ jobs.each { job ->
                 }
             }
 
-            it / factory(class: "org.jenkinsci.plugins.workflow.multibranch.extended.RemoteJenkinsFileWorkflowBranchProjectFactory") << {                    remoteJenkinsFile("Jenkinsfile")
+            it / factory(class: "org.jenkinsci.plugins.workflow.multibranch.extended.RemoteJenkinsFileWorkflowBranchProjectFactory") << {
+                remoteJenkinsFile("Jenkinsfile")
                 remoteJenkinsFileSCM(class: 'hudson.plugins.git.GitSCM') {
                      userRemoteConfigs {
                          'hudson.plugins.git.UserRemoteConfig' {
@@ -41,5 +42,6 @@ jobs.each { job ->
                  }
             }
         }
+        email_notification("SUCCESSFUL", ["ntwairay@gmail.com"])
     }
 }
