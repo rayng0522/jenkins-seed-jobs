@@ -1,3 +1,10 @@
+library identifier: 'jenkins-shared-libraries@tags/0.0.4', retriever: modernSCM([
+    $class: 'GitSCMSource',
+    remote: 'https://github.com/rayng0522/jenkins-shared-libraries.git',
+    credentialsId: '309ff56c-7993-4ed0-8003-dbdf15fb3f01'
+])
+
+
 Boolean mockCmdb = true
 List supportGroups = [
     'RT-SRE',
