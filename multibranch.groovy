@@ -41,26 +41,6 @@ jobs.each { job ->
                      }
                  }
             }
-            publishers {
-                extendedEmail {
-                    recipientList('ntwairay@gmail.com')
-                    defaultSubject('Oops')
-                    defaultContent('Something broken')
-                    contentType('text/html')
-                    triggers {
-                        beforeBuild()
-                        stillUnstable {
-                            subject('Subject')
-                            content('Body')
-                            sendTo {
-                                developers()
-                                requester()
-                                culprits()
-                            }
-                        }
-                    }
-                }
-            }
         }
     }
 }
