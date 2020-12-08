@@ -111,7 +111,7 @@ pipeline {
             steps {
                 checkout scm
                 echo "Seeding: ${lbus}"
-                def hello = jobDsl(
+                jobDsl(
                     targets: ['seed.groovy'].join('\n'),
                     failOnMissingPlugin: true,
                     failOnSeedCollision: true,
