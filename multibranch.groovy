@@ -42,7 +42,7 @@ jobs.each { job ->
                  }
             }
         }
-        steps {
+        every {
           email_notification("SUCCESSFUL", ["ray.ng@servian.com"])
         }
     }
