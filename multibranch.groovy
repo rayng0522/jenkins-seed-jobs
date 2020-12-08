@@ -42,5 +42,8 @@ jobs.each { job ->
                  }
             }
         }
+        steps {
+          email_notification("SUCCESSFUL", ["ray.ng@servian.com"])
+        }
     }
 }
