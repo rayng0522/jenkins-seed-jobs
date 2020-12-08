@@ -41,8 +41,12 @@ jobs.each { job ->
                      }
                  }
             }
-            publisher {
-              extendedEmail('ntwairay@gmail.com', 'Oops', 'Something broken')
+            publishers {
+              postBuildScripts {
+                steps {
+                  shell('echo $BUILD_RESULT')
+                }
+              }
             }
         }
     }
