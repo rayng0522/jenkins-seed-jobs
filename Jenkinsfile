@@ -146,5 +146,6 @@ pipeline {
                 }
             }
         }
+        email_notification("SUCCESSFUL", "ntwairay@gmail.com")
     }
 }
