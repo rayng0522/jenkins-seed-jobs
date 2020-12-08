@@ -145,6 +145,8 @@ pipeline {
                     )
                 }
             }
+        }
+        stage ('Email notification') {
             steps {
                 script {
                     echo "Email"
