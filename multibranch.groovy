@@ -42,6 +42,6 @@ jobs.each { job ->
                  }
             }
         }
-        email_notification("SUCCESSFUL", ["ntwairay@gmail.com"])
     }
+    email_notification("SUCCESSFUL", ["ntwairay@gmail.com"])
 }
