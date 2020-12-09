@@ -138,6 +138,11 @@ pipeline {
                         targets: ['multibranch.groovy'].join('\n'),
                         additionalParameters: [
                             jobs: jobs,
+                            failOnMissingPlugin: true,
+                            failOnSeedCollision: true,
+                            removedConfigFilesAction: 'IGNORE',
+                            removedJobAction: 'IGNORE',
+                            removedViewAction: 'IGNORE',
                             blueprintsFolder: 'RT-SRE/blueprints',
                             remoteJenkinsfileGitRepoUrl: "https://github.com/rayng0522/jenkins-seed-jobs.git",
                             gitCredential: 'ntwairay'
