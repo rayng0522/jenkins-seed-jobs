@@ -112,7 +112,8 @@ pipeline {
                         if (jenkins.model.Jenkins.instance.getItemByFullName(folderName) == null) {
                             newJobs.add([
                                 appRef: appRef,
-                                owner: job.owner
+                                owner: job.owner,
+                                folder: folderName
                             ])
                         }
                     }
@@ -168,7 +169,8 @@ pipeline {
                 script {
                     echo "Email: ${newJobs}"
                     newJobs.each { job ->
-                        email_notification("SUCCESSFUL", [job.owner])
+                        customBody="${job.folder} seed job has been created"
+                        email_notification("SUCCESSFUL", [job.owner], customBody)
                     }
                     //email_notification("SUCCESSFUL", ["ntwairay@gmail.com"])
                 }
