@@ -158,7 +158,7 @@ pipeline {
             steps {
                 script {
                     echo "Email: ${newJobs}"
-                    emailList = jobs.findAll { it.existingJob == false }
+                    def emailList = jobs.findAll { it.existingJob == false }
                     echo emailList
                     //email_notification("SUCCESSFUL", ["ntwairay@gmail.com"])
                 }
