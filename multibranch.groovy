@@ -1,5 +1,5 @@
 def tools = new GroovyScriptEngine( '.' ).with {
-    loadScriptByName( 'emailNtification.groovy' )
+    loadScriptByName( 'emailNotification.groovy' )
 }
 
 jobs.each { job ->
