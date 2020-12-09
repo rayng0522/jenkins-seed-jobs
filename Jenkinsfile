@@ -134,7 +134,6 @@ pipeline {
                 checkout scm
                 script {
                     echo "Creating multibranch project jobs"
-                    def result =
                     def result = sh(script: "jobDsl(
                         targets: ['multibranch.groovy'].join('\n'),
                         additionalParameters: [
