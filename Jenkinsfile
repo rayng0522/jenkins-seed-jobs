@@ -158,10 +158,12 @@ pipeline {
     }
     post {
         success {
-            def newJobs = jobs.findAll { it.existingJob == false }
-            newJobs.each { job ->
-                def customBody = "New seed job ${job.folderName} has been created"
-                email_notification("SUCCESSFUL", [job.appOwner], customBody)
+            script {
+                def newJobs = jobs.findAll { it.existingJob == false }
+                newJobs.each { job ->
+                    def customBody = "New seed job ${job.folderName} has been created"
+                    email_notification("SUCCESSFUL", [job.appOwner], customBody)
+                }
             }
         }
     }
