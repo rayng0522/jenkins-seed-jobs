@@ -103,6 +103,7 @@ pipeline {
                             adCode: job.subscription.tenant.lbu.ad_code,
                             appRef: job.code,
                             blueprintGitRepoUrl: job.repo,
+                            folderName: folderName,
                             existingJob: jenkins.model.Jenkins.instance.getItemByFullName(folderName) != null ? true : false
                         ])
                     }
@@ -156,9 +157,11 @@ pipeline {
         stage ('Email notification') {
             steps {
                 script {
-                    def emailList = jobs.findAll { it.existingJob == true }
-                    echo "${emailList}"
-                    //email_notification("SUCCESSFUL", ["ntwairay@gmail.com"])
+                    def newJobs = jobs.findAll { it.existingJob == false }
+                    newJobs.each { job ->
+                        def customBody = "New seed job ${job.folderName} has been created"
+                        email_notification("SUCCESSFUL", ["ntwairay@gmail.com"], customBody)
+                    }
                 }
             }
         }
