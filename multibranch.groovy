@@ -1,4 +1,4 @@
-@Library("jenkins-shared-libraries@tags/0.0.4")
+import email_notification
 
 jobs.each { job ->
     UUID uuid = UUID.randomUUID()
