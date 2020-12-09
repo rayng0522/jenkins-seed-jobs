@@ -99,9 +99,8 @@ pipeline {
 
                     jobResults.each { job ->
                         def folderName  = ['RT-SRE/blueprints', job.subscription.tenant.lbu.ad_code, job.code].join('/')
-                        def existingJob =
                         jobs.add([
-                            adCode: lbu,
+                            adCode: job.subscription.tenant.lbu.ad_code,
                             appRef: job.code,
                             blueprintGitRepoUrl: job.repo,
                             existingJob: jenkins.model.Jenkins.instance.getItemByFullName(folderName) == null ? true : false
