@@ -115,9 +115,9 @@ pipeline {
                     targets: ['seed.groovy'].join('\n'),
                     failOnMissingPlugin: true,
                     failOnSeedCollision: true,
-                    removedConfigFilesAction: 'DELETE',
-                    removedJobAction: 'DELETE',
-                    removedViewAction: 'DELETE',
+                    removedConfigFilesAction: 'IGNORE',
+                    removedJobAction: 'IGNORE',
+                    removedViewAction: 'IGNORE',
                     lookupStrategy: 'JENKINS_ROOT',
                     sandbox: false,
                     additionalParameters: [
