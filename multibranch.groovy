@@ -43,5 +43,7 @@ jobs.each { job ->
             }
         }
     }
-    println(test)
+    if (jenkins.model.Jenkins.instance.getItem("YOUR_JOB_NAME") == null) {
+        println(test)
+    }
 }
