@@ -150,7 +150,7 @@ pipeline {
                             gitCredential: 'ntwairay'
                         ]
                     )
-                }newJ
+                }
             }
         }
         stage ('Email notification') {
