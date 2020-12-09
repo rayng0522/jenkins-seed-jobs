@@ -142,7 +142,7 @@ pipeline {
                             remoteJenkinsfileGitRepoUrl: "https://github.com/rayng0522/jenkins-seed-jobs.git",
                             gitCredential: 'ntwairay'
                         ],
-                        scriptText: 'echo hello world'
+                        scriptText: 'println " BUILD_NUMBER = ${BUILD_NUMBER}"'
                     )
                 }
             }
