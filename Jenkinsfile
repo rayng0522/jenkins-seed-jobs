@@ -141,7 +141,7 @@ pipeline {
                             blueprintsFolder: 'RT-SRE/blueprints',
                             remoteJenkinsfileGitRepoUrl: "https://github.com/rayng0522/jenkins-seed-jobs.git",
                             gitCredential: 'ntwairay'
-                        ]
+                        ],
                         scriptText: 'echo hello world'
                     )
                 }
