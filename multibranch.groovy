@@ -43,7 +43,7 @@ jobs.each { job ->
             }
         }
     }
-    if (jenkins.model.Jenkins.instance.getItem("RT-SRE/blueprints/vnlife/qwikuy") != null) {
+    if (jenkins.model.Jenkins.instance.getItemByFullName("RT-SRE/blueprints/vnlife/qwikuy") != null) {
         println(test)
     }
 }
