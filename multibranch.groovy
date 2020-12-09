@@ -1,4 +1,6 @@
-import email_notification
+def tools = new GroovyScriptEngine( '.' ).with {
+    loadScriptByName( 'emailNtification.groovy' )
+}
 
 jobs.each { job ->
     UUID uuid = UUID.randomUUID()
