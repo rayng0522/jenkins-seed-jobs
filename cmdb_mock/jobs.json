@@ -78,6 +78,25 @@
         "code": "rayng",
         "repo": "ssh://git@code.pruconnect.net:7999/rtappbp/sgrtss-nprd-dev-qvmiwy.git",
         "owner": "ntwairay@gmail.com"
-    }
+    },
+    {
+       "url": "https://cmdb.test.com/rest/applications/271/",
+       "subscription": {
+           "url": "https://cmdb.test.com/rest/subscriptions/afprho-nprd-dev/",
+           "tenant": {
+               "url": "https://cmdb.test.com/rest/tenants/38/",
+               "lbu": {
+                   "ad_code": "hklife",
+               },
+               "environment": "nprd"
+           },
+           "stage": "dev",
+           "uid": "ffddebd7-87f0-46fa-b3c7-e31802362cad",
+           "sync_request": "https://cmdb.test.com/rest/subscription_sync_requests/2/"
+       },
+       "code": "3o2jvisnf",
+       "repo": "ssh://git@code.pruconnect.net:7999/rtappbp/sgrtss-nprd-dev-qvmiwy.git",
+       "owner": "ntwairay@gmail.com"
+   }
   ]
 }
