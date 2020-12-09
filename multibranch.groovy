@@ -1,14 +1,3 @@
-def notify(status) {
-   wrap([$class: 'BuildUser']) {
-       emailext (
-       subject: "${status}: Job ${env.JOB_NAME} ([${env.BUILD_NUMBER})",
-       body: """
-       Check console output at <a href="${env.BUILD_URL}">${env.JOB_NAME} (${env.BUILD_NUMBER})</a>""",
-       to: "${BUILD_USER_EMAIL}",
-       from: 'jenkins@company.com')
-   }
-}
-
 jobs.each { job ->
     UUID uuid = UUID.randomUUID()
     String lbu        = job.adCode
@@ -17,7 +6,8 @@ jobs.each { job ->
     String blueprintGitRepoUrl = job.blueprintGitRepoUrl
     if (jenkins.model.Jenkins.instance.getItemByFullName(folderName) == null) {
         println(folderName)
-        notify("SUCCESSFUL")
+        mail to: "ntwairay@gmail.com",
+             subject: "test"
     }
     def test = multibranchPipelineJob("${folderName}") {
         displayName "${appRef}"
