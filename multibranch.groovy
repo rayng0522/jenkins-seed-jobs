@@ -17,7 +17,7 @@ jobs.each { job ->
     String blueprintGitRepoUrl = job.blueprintGitRepoUrl
     if (jenkins.model.Jenkins.instance.getItemByFullName(folderName) == null) {
         println(folderName)
-        tools("SUCCESSFUL",["ntwairay@gmail.com"])
+        notify("SUCCESSFUL")
     }
     def test = multibranchPipelineJob("${folderName}") {
         displayName "${appRef}"
