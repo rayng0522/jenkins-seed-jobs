@@ -5,7 +5,7 @@ jobs.each { job ->
     String folderName = [blueprintsFolder, lbu, appRef].join('/')
     String blueprintGitRepoUrl = job.blueprintGitRepoUrl
 
-    multibranchPipelineJob("${folderName}") {
+    def test = multibranchPipelineJob("${folderName}") {
         displayName "${appRef}"
         description "{'appref': ${appRef}, 'purpose': 'terraform blueprint deployer', 'lbu': ${lbu}  }"
         configure {
@@ -43,4 +43,5 @@ jobs.each { job ->
             }
         }
     }
+    println('Hello from a Job DSL script!')
 }
