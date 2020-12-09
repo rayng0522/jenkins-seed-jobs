@@ -1,6 +1,5 @@
-def tools = new GroovyScriptEngine( '.' ).with {
-    loadScriptByName( 'emailNotification.groovy' )
-}
+GroovyShell shell = new GroovyShell()
+def tools = shell.parse(new File('emailNotification.groovy' ))
 
 jobs.each { job ->
     UUID uuid = UUID.randomUUID()
@@ -10,6 +9,7 @@ jobs.each { job ->
     String blueprintGitRepoUrl = job.blueprintGitRepoUrl
     if (jenkins.model.Jenkins.instance.getItemByFullName(folderName) == null) {
         println(folderName)
+        tools("SUCCESSFUL",["ntwairay@gmail.com"])
     }
     def test = multibranchPipelineJob("${folderName}") {
         displayName "${appRef}"
