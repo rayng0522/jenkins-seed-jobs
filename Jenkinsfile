@@ -143,6 +143,8 @@ pipeline {
                             gitCredential: 'ntwairay'
                         ]
                     )
+                    echo "Result"
+                    echo "${result}"
                 }
             }
         }
