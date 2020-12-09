@@ -104,6 +104,7 @@ pipeline {
                             appRef: job.code,
                             blueprintGitRepoUrl: job.repo,
                             folderName: folderName,
+                            appOwner: job.owner,
                             existingJob: jenkins.model.Jenkins.instance.getItemByFullName(folderName) != null ? true : false
                         ])
                     }
@@ -158,9 +159,10 @@ pipeline {
             steps {
                 script {
                     def newJobs = jobs.findAll { it.existingJob == false }
+                    echo "${newJobs}"
                     newJobs.each { job ->
                         def customBody = "New seed job ${job.folderName} has been created"
-                        email_notification("SUCCESSFUL", ["ntwairay@gmail.com"], customBody)
+                        email_notification("SUCCESSFUL", [job.appOwner], customBody)
                     }
                 }
             }
