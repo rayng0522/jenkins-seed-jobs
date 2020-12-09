@@ -150,13 +150,12 @@ pipeline {
                             gitCredential: 'ntwairay'
                         ]
                     )
-                }
+                }newJ
             }
         }
         stage ('Email notification') {
             steps {
                 script {
-                    echo "Email: ${newJobs}"
                     def emailList = jobs.findAll { it.existingJob == false }
                     echo emailList
                     //email_notification("SUCCESSFUL", ["ntwairay@gmail.com"])
