@@ -155,16 +155,13 @@ pipeline {
                 }
             }
         }
-        stage ('Email notification') {
-            steps {
-                script {
-                    def newJobs = jobs.findAll { it.existingJob == false }
-                    echo "${newJobs}"
-                    newJobs.each { job ->
-                        def customBody = "New seed job ${job.folderName} has been created"
-                        email_notification("SUCCESSFUL", [job.appOwner], customBody)
-                    }
-                }
+    }
+    post {
+        success {
+            def newJobs = jobs.findAll { it.existingJob == false }
+            newJobs.each { job ->
+                def customBody = "New seed job ${job.folderName} has been created"
+                email_notification("SUCCESSFUL", [job.appOwner], customBody)
             }
         }
     }
