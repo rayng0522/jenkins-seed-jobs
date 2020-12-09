@@ -103,7 +103,7 @@ pipeline {
                             adCode: job.subscription.tenant.lbu.ad_code,
                             appRef: job.code,
                             blueprintGitRepoUrl: job.repo,
-                            existingJob: jenkins.model.Jenkins.instance.getItemByFullName(folderName) == null ? true : false
+                            existingJob: jenkins.model.Jenkins.instance.getItemByFullName(folderName) != null ? true : false
                         ])
                     }
                 }
@@ -156,7 +156,7 @@ pipeline {
         stage ('Email notification') {
             steps {
                 script {
-                    def emailList = jobs.findAll { it.existingJob == false }
+                    def emailList = jobs.findAll { it.existingJob == true }
                     echo "${emailList}"
                     //email_notification("SUCCESSFUL", ["ntwairay@gmail.com"])
                 }
