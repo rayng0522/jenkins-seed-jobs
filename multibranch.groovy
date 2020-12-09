@@ -43,5 +43,5 @@ jobs.each { job ->
             }
         }
     }
-    println('Hello from a Job DSL script!')
+    println(test)
 }
