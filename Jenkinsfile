@@ -160,15 +160,13 @@ pipeline {
                             gitCredential: 'ntwairay'
                         ]
                     )
-                    echo "Result"
-                    echo result
                 }
             }
         }
         stage ('Email notification') {
             steps {
                 script {
-                    echo "Email"
+                    echo "Email: ${newJobs}"
                     newJobs.each { job ->
                         email_notification("SUCCESSFUL", [job.owner])
                     }
