@@ -144,7 +144,7 @@ pipeline {
                         ]
                     )
                     echo "Result"
-                    echo "${result}"
+                    echo result
                 }
             }
         }
