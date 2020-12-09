@@ -134,15 +134,16 @@ pipeline {
                 checkout scm
                 script {
                     echo "Creating multibranch project jobs"
-                    def result = jobDsl(
+                    def result =
+                    def result = sh(script: "jobDsl(
                         targets: ['multibranch.groovy'].join('\n'),
                         additionalParameters: [
                             jobs: jobs,
                             blueprintsFolder: 'RT-SRE/blueprints',
-                            remoteJenkinsfileGitRepoUrl: "https://github.com/rayng0522/jenkins-seed-jobs.git",
+                            remoteJenkinsfileGitRepoUrl: \"https://github.com/rayng0522/jenkins-seed-jobs.git\",
                             gitCredential: 'ntwairay'
                         ]
-                    )
+                    )", returnStdout: true)
                     echo "Result"
                     echo result
                 }
