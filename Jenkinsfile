@@ -26,7 +26,6 @@ List lbuPermissions = [
 ]
 List lbuResults = []
 List jobResults = []
-List newJobs = []
 Map lbuGroups = [
     afprho: ['GAFRHO-JenkinsUsers (43d97a45-b778-4478-877c-699a75618810)'],
     hklife: ['GHKLife-JenkinsUsers (17428b7d-2483-4092-afa6-32e538cdf6a9)'],
@@ -99,23 +98,14 @@ pipeline {
                     }
 
                     jobResults.each { job ->
+                        def folderName  = ['RT-SRE/blueprints', job.subscription.tenant.lbu.ad_code, job.code].join('/')
+                        def existingJob =
                         jobs.add([
-                            adCode: job.subscription.tenant.lbu.ad_code,
+                            adCode: lbu,
                             appRef: job.code,
-                            blueprintGitRepoUrl: job.repo
+                            blueprintGitRepoUrl: job.repo,
+                            existingJob: jenkins.model.Jenkins.instance.getItemByFullName(folderName) == null ? true : false
                         ])
-                        def blueprintsFolder = 'RT-SRE/blueprints'
-                        def lbu = job.subscription.tenant.lbu.ad_code
-                        def appRef = job.code
-                        def folderName = [blueprintsFolder, lbu, appRef].join('/')
-                        echo folderName
-                        if (jenkins.model.Jenkins.instance.getItemByFullName(folderName) == null) {
-                            newJobs.add([
-                                appRef: appRef,
-                                owner: job.owner,
-                                folder: folderName
-                            ])
-                        }
                     }
                 }
             }
@@ -168,10 +158,8 @@ pipeline {
             steps {
                 script {
                     echo "Email: ${newJobs}"
-                    newJobs.each { job ->
-                        customBody="${job.folder} seed job has been created"
-                        email_notification("SUCCESSFUL", [job.owner], customBody)
-                    }
+                    emailList = jobs.findAll { it.existingJob == false }
+                    echo emailList
                     //email_notification("SUCCESSFUL", ["ntwairay@gmail.com"])
                 }
             }
