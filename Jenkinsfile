@@ -108,8 +108,8 @@ pipeline {
                         def lbu = job.subscription.tenant.lbu.ad_code
                         def appRef = job.code
                         def folderName = [blueprintsFolder, lbu, appRef].join('/')
+                        echo folderName
                         if (jenkins.model.Jenkins.instance.getItemByFullName(folderName) == null) {
-                            echo folderName
                             newJobs.add([
                                 appRef: appRef,
                                 owner: job.owner
