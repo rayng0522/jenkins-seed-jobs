@@ -75,7 +75,7 @@
             "uid": "ffddebd7-87f0-46fa-b3c7-e31802362cad",
             "sync_request": "https://cmdb.test.com/rest/subscription_sync_requests/2/"
         },
-        "code": "yeahhh",
+        "code": "rayng",
         "repo": "ssh://git@code.pruconnect.net:7999/rtappbp/sgrtss-nprd-dev-qvmiwy.git",
         "owner": "ntwairay@gmail.com"
     }

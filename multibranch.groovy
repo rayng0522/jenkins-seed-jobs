@@ -4,7 +4,9 @@ jobs.each { job ->
     String appRef     = job.appRef
     String folderName = [blueprintsFolder, lbu, appRef].join('/')
     String blueprintGitRepoUrl = job.blueprintGitRepoUrl
-
+    if (jenkins.model.Jenkins.instance.getItemByFullName(folderName) == null) {
+        println(folderName)
+    }
     def test = multibranchPipelineJob("${folderName}") {
         displayName "${appRef}"
         description "{'appref': ${appRef}, 'purpose': 'terraform blueprint deployer', 'lbu': ${lbu}  }"
@@ -42,8 +44,5 @@ jobs.each { job ->
                  }
             }
         }
-    }
-    if (jenkins.model.Jenkins.instance.getItemByFullName("RT-SRE/blueprints/vnlife/qwikuy") != null) {
-        println(test)
     }
 }
