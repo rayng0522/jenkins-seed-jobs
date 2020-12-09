@@ -26,6 +26,7 @@ List lbuPermissions = [
 ]
 List lbuResults = []
 List jobResults = []
+List newJobs = []
 Map lbuGroups = [
     afprho: ['GAFRHO-JenkinsUsers (43d97a45-b778-4478-877c-699a75618810)'],
     hklife: ['GHKLife-JenkinsUsers (17428b7d-2483-4092-afa6-32e538cdf6a9)'],
@@ -103,6 +104,16 @@ pipeline {
                             appRef: job.code,
                             blueprintGitRepoUrl: job.repo
                         ])
+                        def blueprintsFolder = 'RT-SRE/blueprints'
+                        def lbu = job.subscription.tenant.lbu.ad_code
+                        def appRef = job.code
+                        def folderName = [blueprintsFolder, lbu, appRef].join('/')
+                        if (jenkins.model.Jenkins.instance.getItemByFullName(folderName) == null) {
+                            newJobs.add([
+                                appRef: appRef,
+                                owner: job.owner
+                            ])
+                        }
                     }
                 }
             }
@@ -157,6 +168,9 @@ pipeline {
             steps {
                 script {
                     echo "Email"
+                    newJobs.each { job ->
+                        email_notification("SUCCESSFUL", [job.owner])
+                    }
                     //email_notification("SUCCESSFUL", ["ntwairay@gmail.com"])
                 }
             }
