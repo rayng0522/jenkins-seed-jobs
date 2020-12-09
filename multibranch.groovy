@@ -6,9 +6,6 @@ jobs.each { job ->
     String blueprintGitRepoUrl = job.blueprintGitRepoUrl
 
     multibranchPipelineJob("${folderName}") {
-        steps {
-          shell('echo Hello World!')
-        }
         displayName "${appRef}"
         description "{'appref': ${appRef}, 'purpose': 'terraform blueprint deployer', 'lbu': ${lbu}  }"
         configure {
